@@ -2,15 +2,15 @@ FROM python:3.8-alpine3.15
 ENV FLASK_ENV=production
 ENV PROD_DATABASE_URI=""
 ENV PYTHONUNBUFFERED=1
-ENV PATH=$PATH:/home/flaskapp/.local/bin
+ENV PATH=$PATH:/home/encrypter/.local/bin
 
 #crear usuario
-RUN adduser -S -D -H flaskapp
-RUN mkdir /home/flaskapp
-RUN chown -R flaskapp /home/flaskapp
+RUN adduser -S -D -H encrypter
+RUN mkdir /home/encrypter
+RUN chown -R encrypter /home/encrypter
 
 #seleccionar la carpeta del usuario
-WORKDIR /home/flaskapp
+WORKDIR /home/encrypter
 
 RUN mkdir main
 #TODO: Agregar env flask_env=production
@@ -20,11 +20,10 @@ COPY ./app.py .
 
 #Instala dependencias del sistema
 RUN apk add --update curl gcc g++ libffi-dev openssl-dev build-base linux-headers && \
-    apk add mariadb-dev py3-mysqlclient mysql-client && \
     rm -rf /var/cache/apk/*
 
 ADD requirements.txt ./requirements.txt
-USER flaskapp
+USER encrypter
 RUN pip install --no-cache-dir -r requirements.txt
 #RUN pip install gevent gunicorn==20.1.0
 
