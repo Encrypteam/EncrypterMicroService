@@ -1,0 +1,35 @@
+version: '3.3'
+services:
+  mysql:
+    container_name: mysql-servidor
+    image:  mysql:8-debian
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3336:3306"
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ~/mysql/_data:/var/lib/mysql
+    restart: always
+    networks:
+      - red
+  appflask:
+    container_name: encrypter
+    image: encrypter:dev
+    ports:
+      - "81:5000"
+    environment:
+      - PORT=5000
+      - DATABASE_NAME=${MYSQL_DATABASE}
+      - DATABASE_PORT=3306
+      - DATABASE_URL=mysql-servidor
+      - DATABASE_USER=${MYSQL_USER}
+      - DATABASE_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - red
+    restart: always
+networks:
+  red:
