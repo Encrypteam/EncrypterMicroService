@@ -1,6 +1,7 @@
 import tempfile
 from flask import Blueprint, request, send_file
-from main.services import EncrypterService
+# from main.services import EncrypterService
+from main.utils import Encrypter
 
 resource_enc = Blueprint('resource_enc', __name__)
 
@@ -11,8 +12,8 @@ def upload():
     username = request.form['username']
     email = request.form['email']
     if file:
-        enc = EncrypterService()
-        data_encrypted = enc.encrypt_data(username, file.read(), email)
+        enc = Encrypter()
+        data_encrypted = enc.encrypt(username, file.read())
 
         with tempfile.NamedTemporaryFile() as f:
             f.write(data_encrypted)
@@ -27,8 +28,8 @@ def download():
     username = request.form['username']
     email = request.form['email']
     if file:
-        dec = EncrypterService()
-        data_decrypted = dec.decrypt_data(username, file.read(), email)
+        dec = Encrypter()
+        data_decrypted = dec.decrypt(username, file.read())
 
         with tempfile.NamedTemporaryFile() as f:
             f.write(data_decrypted)
