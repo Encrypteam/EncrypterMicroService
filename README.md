@@ -1,4 +1,3 @@
-testing... testing...
 # Welcome to EncrypterMicroService
 **Este microservicio encripta sus datos. Dicho desarrollo cuplira con 12 factos app:**
 1. Código Base
