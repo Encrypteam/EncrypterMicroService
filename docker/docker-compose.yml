@@ -21,7 +21,7 @@ services:
     container_name: user-ms
     image: user-ms:dev
     ports:
-      - "85:5000"
+      - "85:7000"
     environment:
       - PORT=5000
       - DATABASE_NAME=${MYSQL_DATABASE}
