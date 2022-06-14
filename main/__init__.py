@@ -7,7 +7,6 @@ def create_app():
     load_dotenv()
 
     from main.resources import resource_enc, home
-
     app.register_blueprint(resource_enc, url_prefix='/api/v1')
-    app.register_blueprint(home, url_prefix='/api/v1')
+    app.register_blueprint(home, url_prefix='/')
     return app
