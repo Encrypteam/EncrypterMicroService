@@ -1,4 +1,4 @@
-class User():
+class User:
 
     __id: int
     __user_name: str

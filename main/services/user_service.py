@@ -1,3 +1,4 @@
+import json
 import os
 
 from main.dto import User
@@ -6,7 +7,7 @@ import requests
 
 class UserService:
     def __init__(self):
-        self.url = os.getenv('API_USER_URL')
+        self.url = 'http://127.0.0.1:5500'
 
     def create(self, user: User) -> User:
         r = requests.post(self.url + '/api/v1/users', json=user)
@@ -14,14 +15,17 @@ class UserService:
         return user
 
     def find_by_username(self, username: str) -> User:
-        r = requests.get(self.url + '/api/v1/users/username/' + username)
+        data = {}
+        r = requests.get(self.url + '/api/v1/users/username/' + username, json=data)
+        if r.status_code == 404:
+            return None
         # TODO: verificar 200 y devolver algo
-        return r.status_code
+        return json.loads(r.text)['key']
 
     def find_by_id(self, id):
         r = requests.get(self.url + '/api/v1/users/id/' + id)
         # TODO: verificar 200 y devolver algo
-        return r.status_code
+        return id
 
     def find_all(self):
         r = requests.get(self.url + '/api/v1/users/all')
@@ -31,5 +35,4 @@ class UserService:
     def update(self, user: User) -> User:
         r = requests.put(self.url + '/api/v1/users/update', json=user)
         # TODO: verificar 200 y devolver algo
-        return r.status_code
-
+        return user

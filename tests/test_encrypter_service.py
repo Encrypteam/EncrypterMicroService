@@ -1,6 +1,6 @@
 import unittest
 
-from main import create_app, db
+from main import create_app
 from main.services import EncrypterService
 
 
@@ -10,11 +10,11 @@ class TestEncrypterService(unittest.TestCase):
         self.app = create_app()
         self.app_context = self.app.app_context()
         self.app_context.push()
-        db.create_all()
+        # db.create_all()
         self.encrypterService = EncrypterService()
 
     def tearDown(self):
-        db.session.remove()
+        # db.session.remove()
         # db.drop_all()
         self.app_context.pop()
 
