@@ -21,10 +21,10 @@ class EncrypterService:
         :param str username: username
         :return: key
         :rtype: str """
-        user = self.userService.find_by_username(username)
-        if user is None:
-            user = self.__create_user(username, email)
-        return user
+        key = self.userService.find_by_username(username)
+        if key is None:
+            key = self.__create_user(username, email)
+        return key
 
     def encrypt_data(self, username: str, data: any, email: str) -> bytes:
         """ Encrypt data and return encrypted data
@@ -34,10 +34,8 @@ class EncrypterService:
         :param str data: data to encrypt
         :return: encrypt data
         :rtype: str"""
-        print('ENCRYPT_DATA', username, email)
         key = self.key_load(username, email).encode()
-        print('PASA', key, username, email)
-        return self.encrypter.encrypt(data, key)
+        return self.encrypter.encrypt(key, data)
 
     def decrypt_data(self, username: str, data_encrypted: bytes, email: str) -> bytes:
         key = self.key_load(username, email)

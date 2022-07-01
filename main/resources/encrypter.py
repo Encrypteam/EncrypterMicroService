@@ -13,7 +13,6 @@ def upload():
     if file:
         enc = EncrypterService()
         data_encrypted = enc.encrypt_data(username, file.read(), email)
-        print('DATA ENCRYPTED', data_encrypted)
         with tempfile.NamedTemporaryFile() as f:
             f.write(data_encrypted)
             f.flush()

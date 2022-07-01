@@ -14,11 +14,9 @@ class UserService:
         # TODO: verificar 200 y devolver algo
         return user
 
-    def find_by_username(self, username: str) -> User:
+    def find_by_username(self, username: str) -> str:
         data = {}
         r = requests.get(self.url + '/api/v1/users/username/' + username, json=data)
-        if r.status_code == 404:
-            return None
         # TODO: verificar 200 y devolver algo
         return json.loads(r.text)['key']
 
