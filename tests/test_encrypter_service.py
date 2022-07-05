@@ -16,16 +16,16 @@ class TestEncrypterService(unittest.TestCase):
         self.app_context.pop()
 
     def test_encrypt_data(self):
-        username = 'delfina'
+        username = 'juan'
         data = 'sadhfbsadhfbsaldfbfsdf'.encode()
-        email = 'delfina@example.com'
+        email = 'juan@example.com'
         data_encrypted = self.encrypterService.encrypt_data(username, data, email)
         self.assertIsNotNone(data_encrypted)
 
     def test_decrypt_data(self):
-        username = 'delfina'
-        data = 'sadhfbsadhfbsaldfbfsdf'
-        email = 'delfina@example.com'
-        data_encrypted = self.encrypterService.encrypt_data(username, data.encode(), email)
+        username = 'juan'
+        data = 'sadhfbsadhfbsaldfbfsdf'.encode()
+        email = 'juan@example.com'
+        data_encrypted = self.encrypterService.encrypt_data(username, data, email)
         data_decrypted = self.encrypterService.decrypt_data(username, data_encrypted, email)
-        self.assertEqual(data, data_decrypted.decode())
+        self.assertEqual(data, data_decrypted)
