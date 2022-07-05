@@ -12,8 +12,10 @@ class TestEncrypter(unittest.TestCase):
     def test_encrypt_decrypt_data(self):
         encrypter = Encrypter()
         key = encrypter.get_key()
+        print('KEY: ', key)
         data = 'test'
-        encrypted_data = encrypter.encrypt(data.encode(), key)
+        encrypted_data = encrypter.encrypt(key, data.encode())
+        print('ENCRYPTED DATA:', encrypted_data)
         self.assertIsNotNone(encrypted_data)
         decrypted_data = encrypter.decrypt(key, encrypted_data).decode()
         self.assertEqual(data, decrypted_data)
