@@ -7,7 +7,7 @@ import requests
 
 class UserService:
     def __init__(self):
-        self.url = 'http://127.0.0.1:5500'
+        self.url = os.getenv('API_URL')
 
     def create(self, user: User) -> User:
         r = requests.post(self.url + '/api/v1/users', json=user)
