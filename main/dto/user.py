@@ -11,7 +11,7 @@ class User:
         self.__key = key
 
     def __repr__(self):
-        return f'{self.__id}, {self.__user_name}, {self.__email},{self.__key}'
+        return f'{self.__user_name}, {self.__email},{self.__key}'
 
     @property
     def id(self):

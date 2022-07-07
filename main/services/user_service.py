@@ -10,15 +10,19 @@ class UserService:
         self.url = os.getenv('API_URL')
 
     def create(self, user: User) -> User:
-        r = requests.post(self.url + '/api/v1/users', json=user)
+        data = {'username': user.user_name, 'email': user.email}
+        r = requests.post(self.url + '/api/v1/users', json=data)
         # TODO: verificar 200 y devolver algo
-        return user
+        return r.status_code
 
-    def find_by_username(self, username: str) -> str:
+    def find_by_username(self, username):
         data = {}
         r = requests.get(self.url + '/api/v1/users/username/' + username, json=data)
         # TODO: verificar 200 y devolver algo
-        return json.loads(r.text)['key']
+        if r.status_code == 200:
+            return json.loads(r.text)['key']
+        else:
+            return None
 
     def find_by_id(self, id):
         r = requests.get(self.url + '/api/v1/users/id/' + id)

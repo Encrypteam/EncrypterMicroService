@@ -11,7 +11,7 @@ class EncrypterService:
     def key_write(self, username: str):
         key = self.encrypter.get_key()
         user = self.userService.find_by_username(username)
-        user.key = key
+        User.key = key
         self.userService.update(user)
 
     def key_load(self, username: str, email: str):
@@ -23,7 +23,8 @@ class EncrypterService:
         :rtype: str """
         key = self.userService.find_by_username(username)
         if key is None:
-            key = self.__create_user(username, email)
+            user = self.__create_user(username, email)
+            return user.key
         return key
 
     def encrypt_data(self, username: str, data: any, email: str) -> bytes:
@@ -34,7 +35,7 @@ class EncrypterService:
         :param str data: data to encrypt
         :return: encrypt data
         :rtype: str"""
-        key = self.key_load(username, email).encode()
+        key = self.key_load(username, email)
         return self.encrypter.encrypt(key, data)
 
     def decrypt_data(self, username: str, data_encrypted: bytes, email: str) -> bytes:

@@ -10,5 +10,5 @@ class Encrypter:
         return f.encrypt(data)
 
     def decrypt(self, key, data) -> bytes:
-        return Fernet(key).decrypt(data)
-
+        f = Fernet(key)
+        return f.decrypt(data)
