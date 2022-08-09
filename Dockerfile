@@ -1,16 +1,16 @@
 FROM python:3.8-alpine3.15
-ENV FLASK_ENV=production
+ENV FLASK_ENV=development
 ENV PROD_DATABASE_URI=""
 ENV PYTHONUNBUFFERED=1
-ENV PATH=$PATH:/home/encrypter/.local/bin
+ENV PATH=$PATH:/home/EncrypterMicroService/.local/bin
 
 #crear usuario
-RUN adduser -S -D -H encrypter
-RUN mkdir /home/encrypter
-RUN chown -R encrypter /home/encrypter
+RUN adduser -S -D -H encrypter-ms
+RUN mkdir /home/EncrypterMicroService
+RUN chown -R encrypter-ms /home/EncrypterMicroService
 
 #seleccionar la carpeta del usuario
-WORKDIR /home/encrypter
+WORKDIR /home/EncrypterMicroService
 
 RUN mkdir main
 #TODO: Agregar env flask_env=production
