@@ -14,8 +14,10 @@ def create_app():
         tags=[''],
         httpcheck='https://encrypter.encrypteam.localhost/healthcheck'
     )
+    consul.apply_remote_config(namespace='configuration/encrypter/')
     load_dotenv()
 
+    print("CONFIG DE CONSUL", app.config['encrypter']['API_URL'])
     from main.resources import resource_enc, home
     app.register_blueprint(resource_enc, url_prefix='/api/v1')
     app.register_blueprint(home, url_prefix='/')

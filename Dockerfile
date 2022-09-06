@@ -19,6 +19,7 @@ COPY ./main ./main
 COPY ./app.py .
 
 #Instala dependencias del sistema
+
 RUN apk add --update curl gcc g++ libffi-dev openssl-dev build-base linux-headers && \
     rm -rf /var/cache/apk/*
 
