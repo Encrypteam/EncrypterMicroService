@@ -5,9 +5,9 @@ ENV PYTHONUNBUFFERED=1
 ENV PATH=$PATH:/home/EncrypterMicroService/.local/bin
 
 #crear usuario
-RUN adduser -S -D -H encrypter-ms
+RUN adduser -S -D -H EncrypterMicroService
 RUN mkdir /home/EncrypterMicroService
-RUN chown -R encrypter-ms /home/EncrypterMicroService
+RUN chown -R EncrypterMicroService /home/EncrypterMicroService
 
 #seleccionar la carpeta del usuario
 WORKDIR /home/EncrypterMicroService
@@ -23,7 +23,7 @@ RUN apk add --update curl gcc g++ libffi-dev openssl-dev build-base linux-header
     rm -rf /var/cache/apk/*
 
 ADD requirements.txt ./requirements.txt
-USER encrypter
+USER EncrypterMicroService
 RUN pip install --no-cache-dir -r requirements.txt
 #RUN pip install gevent gunicorn==20.1.0
 
