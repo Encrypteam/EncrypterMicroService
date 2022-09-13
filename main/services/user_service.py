@@ -3,11 +3,12 @@ import os
 
 from main.dto import User
 import requests
+from main.__init__ import create_app
 
 
 class UserService:
     def __init__(self):
-        self.url = os.getenv('API_URL')
+        self.url = create_app().app.config['encrypter']['API_URL']
 
     def create(self, user: User) -> User:
         data = {'username': user.user_name, 'email': user.email}
