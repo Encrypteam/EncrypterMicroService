@@ -1,2 +1,2 @@
-from .encrypter import resource_enc
+from .encrypter import encrypter
 from .home import home

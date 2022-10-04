@@ -1,11 +1,18 @@
 import tempfile
 from flask import Blueprint, request, send_file
 from main.services import EncrypterService
+from main import metrics
 
-resource_enc = Blueprint('resource_enc', __name__)
+encrypter = Blueprint('encrypter', __name__)
+
+by_path_counter = metrics.counter(
+    'by_path_counter', 'Request count by request paths',
+    labels={'path': lambda: request.path}
+)
 
 
-@resource_enc.route('/upload/', methods=['POST'])
+@by_path_counter
+@encrypter.route('/upload/', methods=['POST'])
 def upload():
     file = request.files["file"]
     username = request.form["username"]
@@ -20,7 +27,8 @@ def upload():
             return send_file(f.name, as_attachment=True, attachment_filename=filename_enc)
 
 
-@resource_enc.route('/download/', methods=['POST'])
+@encrypter.route('/download/', methods=['POST'])
+@by_path_counter
 def download():
     file = request.files["file"]
     username = request.form['username']
