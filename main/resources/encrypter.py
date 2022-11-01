@@ -26,9 +26,8 @@ def upload():
             filename_enc = file.filename + '.enc'
             return send_file(f.name, as_attachment=True, attachment_filename=filename_enc)
 
-
-@encrypter.route('/download/', methods=['POST'])
 @by_path_counter
+@encrypter.route('/download/', methods=['POST'])
 def download():
     file = request.files["file"]
     username = request.form['username']

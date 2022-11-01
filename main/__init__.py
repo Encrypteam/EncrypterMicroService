@@ -2,8 +2,18 @@ from flask import Flask
 from dotenv import load_dotenv
 from flask_consulate import Consul
 from prometheus_flask_exporter import PrometheusMetrics
+import logging
+import logstash
 
-consul = Consul()
+
+
+
+logger = logging.getLogger("python-logstash-logger")
+logger.setLevel(logging.DEBUG)
+
+logger.addHandler(logstash.TCPLogstashHandler('127.0.0.1', 5059, version = 1))
+
+consul = Consul(max_tries=25)
 metrics = PrometheusMetrics.for_app_factory()
 metrics.info('encrypter', 'Description', version='0.1')
 
@@ -14,7 +24,7 @@ def create_app():
     consul.register_service(
         name='encrypter-ms',
         interval='10s',
-        tags=[''],
+        tags=['encrypter'],
         httpcheck='https://encrypter.encrypteam.localhost/healthcheck'
     )
     consul.apply_remote_config(namespace='configuration/encrypter/')

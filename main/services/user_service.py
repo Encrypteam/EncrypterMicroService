@@ -1,14 +1,18 @@
 import json
 import os
 
+
 from main.dto import User
 import requests
-from main.__init__ import create_app
+import consulate
+
 
 
 class UserService:
     def __init__(self):
-        self.url = create_app().app.config['encrypter']['API_URL']
+        session = consulate.Consul()
+        session.kv['tato'] = dict({'API_URL': os.getenv('API_URL')})
+        self.url = os.getenv('API_URL')
 
     def create(self, user: User) -> User:
         data = {'username': user.user_name, 'email': user.email}
